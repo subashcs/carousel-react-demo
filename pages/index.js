@@ -7,6 +7,14 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 // Because this is an inframe, so the SSR mode doesn't not do well here.
 // It will work on real devices.
+function json2array(json) {
+  var result = [];
+  var keys = Object.keys(json);
+  keys.forEach(function(key) {
+    result.push(json[key]);
+  });
+  return result;
+}
 const Index = ({ deviceType, ...props }) => {
   const responsive = {
     superLargeDesktop: {
@@ -51,11 +59,11 @@ const Index = ({ deviceType, ...props }) => {
     return <div style={{ background: "white" }}>Hello World 5!!</div>;
   };
   const carouselItems = {
-    0: <CarouselItem1 />,
-    1: <CarouselItem2 />,
-    2: <CarouselItem3 />,
-    3: <CarouselItem4 />,
-    4: <CarouselItem5 />
+    0: <CarouselItem1 key={0} />,
+    1: <CarouselItem2 key={1} />,
+    2: <CarouselItem3 key={2} />,
+    3: <CarouselItem4 key={3} />,
+    4: <CarouselItem5 key={4} />
   };
 
   const CustomDot = ({ onClick, ...rest }) => {
@@ -78,16 +86,7 @@ const Index = ({ deviceType, ...props }) => {
       </button>
     );
   };
-  let itemKeys = Object.keys(carouselItems);
 
-  function json2array(json) {
-    var result = [];
-    var keys = Object.keys(json);
-    keys.forEach(function(key) {
-      result.push(json[key]);
-    });
-    return result;
-  }
   return (
     <Fragment>
       <div>
@@ -113,9 +112,7 @@ const Index = ({ deviceType, ...props }) => {
           deviceType={props.deviceType}
           itemClass="carousel-item-padding-40-px"
         >
-          {itemKeys.forEach(key => {
-            return carouselItems[key];
-          })}
+          {json2array(carouselItems)}
         </Carousel>
       </div>
     </Fragment>
