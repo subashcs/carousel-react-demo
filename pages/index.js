@@ -72,11 +72,22 @@ const Index = ({ deviceType, ...props }) => {
       <button
         className={active ? "active" : "inactive"}
         onClick={() => onClick()}
+        style={{ padding: 0, border: "0px solid black", margin: "5px" }}
       >
         {carouselItems[index]}
       </button>
     );
   };
+  let itemKeys = Object.keys(carouselItems);
+
+  function json2array(json) {
+    var result = [];
+    var keys = Object.keys(json);
+    keys.forEach(function(key) {
+      result.push(json[key]);
+    });
+    return result;
+  }
   return (
     <Fragment>
       <div>
@@ -102,12 +113,9 @@ const Index = ({ deviceType, ...props }) => {
           deviceType={props.deviceType}
           itemClass="carousel-item-padding-40-px"
         >
-          <CarouselItem1 />
-
-          <CarouselItem2 />
-          <CarouselItem3 />
-          <CarouselItem4 />
-          <CarouselItem5 />
+          {itemKeys.forEach(key => {
+            return carouselItems[key];
+          })}
         </Carousel>
       </div>
     </Fragment>
